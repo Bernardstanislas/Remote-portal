@@ -31,5 +31,11 @@
   },
   "main": "app.js",
   "author": "stan",
-  "license": ""
+  "license": "",
+  "devDependencies": {
+    "mocha": "~2.0.1",
+    "grunt-mocha-test": "~0.12.4",
+    "sinon": "~1.12.2",
+    "assert": "~1.1.2"
+  }
 }
