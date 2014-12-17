@@ -7,11 +7,15 @@
 
 module.exports = {
 	create: function(req, res) {
-		var params = req.params.all();
-		User.create(params, function(err, user) {
-			if (err) res.json({error: 'Database error'}, 500);
-			res.json(user, 201);
-		});
+		if (sails.config.environment === 'development') {
+			var params = req.params.all();
+			User.create(params, function(err, user) {
+				if (err) res.json({error: 'Database error'}, 500);
+				res.json(user, 201);
+			});
+		} else {
+			res.json({message: "Registration closed, sorry"}, 403);
+		}
 	},
 
 	login: function(req, res) {
