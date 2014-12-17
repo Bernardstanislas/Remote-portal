@@ -40,6 +40,9 @@ function doTrigger(req, res) {
     }
   });
   serialPort.write("trigger\n", function(err, results) {
+    if (err) {
+      res.json({message: 'error'}, 500);
+    }
   });
 }
 

@@ -1,8 +1,8 @@
 {
-  "name": "PortalApp",
-  "private": true,
-  "version": "1.2.0",
-  "description": "The portal application.",
+  "name": "Remote-portal",
+  "private": false,
+  "version": "0.0.1",
+  "description": "Remote portal application.",
   "keywords": [],
   "dependencies": {
     "sails": "~0.10.5",
@@ -26,8 +26,9 @@
     "serialport": "~1.4.9"
   },
   "scripts": {
-    "start": "node app.js",
-    "debug": "node debug app.js"
+    "start": "sails lift",
+    "debug": "sails debug",
+    "test": "grunt test"
   },
   "main": "app.js",
   "author": "stan",
