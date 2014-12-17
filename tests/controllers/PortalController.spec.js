@@ -8,12 +8,12 @@ var PortalController = require('../../api/controllers/PortalController'),
 
 describe('The Portal Controller', function () {
     describe('when we call the trigger page', function () {
-        it ('should lift an error', function () {
-            var cb = sinon.spy();
-            PortalController.open(null, {
-                json: cb
-            });
-            assert.ok(cb.called);
+        it ('should return a 500 error', function () {
+            var res = {
+                json: sinon.stub()
+            };
+            PortalController.open(null, res);
+            sinon.assert.calledWithMatch(res.json, { message: "error" }, 500);
         });
     });
 });
