@@ -1,0 +1,53 @@
+@font-face {
+  font-family: 'Open Sans', sans-serif;
+}
+
+body {
+  font-family: 'Open Sans';
+  font-size: 2em;
+  background-color: #1A2530;
+  color: #FFFFFF;
+}
+
+h1 {
+  padding-top: 20px;
+  font-size: 3em;
+  color: #E74C3C;
+}
+
+h1 > b > i.fa {
+  font-size: 1em;
+}
+
+a {
+  color: #FFFFFF;
+}
+
+.fa {
+  font-size: 8em;
+}
+
+/* centered columns styles */
+.row-centered {
+  text-align:center;
+}
+.col-centered {
+  display:inline-block;
+  float:none;
+  /* reset the text-align */
+  text-align:center;
+  /* inline-block space fix */
+  margin-right:-4px;
+}
+.col-fixed {
+  /* custom width */
+  width:320px;
+}
+.col-min {
+  /* custom min width */
+  min-width:320px;
+}
+.col-max {
+  /* custom max width */
+  max-width:320px;
+}
