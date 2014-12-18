@@ -33,11 +33,16 @@ var res = {
     json: sinon.stub()
 };
 
+function prepare() {
+    serialPort.close.reset();
+    serialPort.removeAllListeners();
+    res.json.reset();
+}
+
 describe('The Portal Controller', function () {
     describe('when we call the open action with a bad port configured', function () {
         it ('should return a 404 error with an explicit message and close the serial connection.', function () {
-            serialPort.close.reset();
-            res.json.reset();
+            prepare();
             serialPort.open = function(cb) {
                 var error = true;
                 cb(error);
@@ -50,8 +55,7 @@ describe('The Portal Controller', function () {
 
     describe('when we call the open action with a good port configured and a deaf arduino', function() {
         it('should return a 503 error with an explicit message and close the serial connection.', function () {
-            serialPort.close.reset();
-            res.json.reset();
+            prepare();
             serialPort.open = function(cb) {
                 cb();
             };
@@ -68,9 +72,7 @@ describe('The Portal Controller', function () {
     describe('when we call the open action with a good port configured and a weird talking arduino', function() {
         it ('should return a 400 error with an explicit message and close the serial conection.', function() {
             this.clock = sinon.useFakeTimers();
-            serialPort.close.reset();
-            serialPort.removeAllListeners();
-            res.json.reset();
+            prepare();
             serialPort.open = function(cb) {
                 cb();
             };
@@ -94,9 +96,7 @@ describe('The Portal Controller', function () {
     describe('when we call the open action with a good port configured and a faulty arduino', function() {
         it ('should return a 500 error with an explicit message and close the serial conection.', function() {
             this.clock = sinon.useFakeTimers();
-            serialPort.close.reset();
-            serialPort.removeAllListeners();
-            res.json.reset();
+            prepare();
             serialPort.open = function(cb) {
                 cb();
             };
@@ -113,6 +113,30 @@ describe('The Portal Controller', function () {
 
             this.clock.tick(1600);
             sinon.assert.calledWithMatch(res.json, { error: "Arduino failed to open the portal" }, 500);
+            assert(serialPort.close.calledOnce);
+        });
+    });
+
+    describe('when we call the open action with a good port configured and a working arduino', function() {
+        it ('should return a 200 response with an explicit message and close the serial conection.', function() {
+            this.clock = sinon.useFakeTimers();
+            prepare();
+            serialPort.open = function(cb) {
+                cb();
+            };
+            serialPort.write = function(message, cb) {
+                cb();
+                setTimeout(function() {
+                    serialPort.emit('data', 'suc');
+                }, 1505);
+                setTimeout(function() {
+                    serialPort.emit('data', 'cess\n');
+                }, 1510);
+            };
+            PortalController.open(null, res, serialPort);
+
+            this.clock.tick(1600);
+            sinon.assert.calledWithMatch(res.json, { message: "Success" }, 200);
             assert(serialPort.close.calledOnce);
         });
     });
