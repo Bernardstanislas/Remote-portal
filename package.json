@@ -23,7 +23,8 @@
     "grunt-contrib-less": "0.11.1",
     "grunt-contrib-coffee": "~0.10.1",
     "exec": "~0.1.2",
-    "serialport": "~1.4.9"
+    "serialport": "~1.4.9",
+    "bcrypt": "~0.8.0"
   },
   "scripts": {
     "start": "sails lift",
