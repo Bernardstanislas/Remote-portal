@@ -1,9 +1,6 @@
 var portName = '/dev/cu.usbserial-A94JN1PL';
 
 var SerialPort = require("serialport").SerialPort;
-var serialPort = new SerialPort(portName, {
-  baudrate: 9600
-});
 
 function openPortal(callback) {
 	var serialPort = new SerialPort(portName, {
